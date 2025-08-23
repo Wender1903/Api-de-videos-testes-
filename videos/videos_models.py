@@ -24,6 +24,10 @@ class Video(db.Model):
             'video': self.video
         }
 
+def listar_videos():
+    videos = Video.query.all()
+    return [video.exibir_informacoes() for video in videos]
+
 def criar_videos(novo_video):
     new_video = Video(
         nome=str(novo_video['nome']),
