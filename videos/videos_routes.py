@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from .videos_models import listar_videos, criar_videos, listar_video_id, VideoNaoEncontrado
+from .videos_models import listar_videos, criar_videos, deletar_video, listar_video_id, VideoNaoEncontrado
 
 
 videos_blueprint = Blueprint('videos', __name__)
@@ -24,3 +24,12 @@ def get_video_id(id):
     except VideoNaoEncontrado:
         return jsonify({'mensagem': 'Video nao encontrado'}), 404
 
+
+@videos_blueprint.route('/videos/<int:id>', methods=['DELETE'])
+def excluir_video(id):
+    try:
+        deletar_video(id)
+        return jsonify({'mensagem': 'Video deletado com sucesso'})
+    except VideoNaoEncontrado:
+        return jsonify({'mensagem': 'Video nao encontrado'}), 404
+    

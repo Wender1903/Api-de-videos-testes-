@@ -50,3 +50,10 @@ def criar_videos(novo_video):
     db.session.commit()
     return new_video.exibir_informacoes()
 
+def deletar_video(id):
+    video = Video.query.get(id)
+
+    if not video:
+        raise VideoNaoEncontrado
+    db.session.delete(video)
+    db.session.commit()
