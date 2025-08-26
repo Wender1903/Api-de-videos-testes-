@@ -50,6 +50,23 @@ def criar_videos(novo_video):
     db.session.commit()
     return new_video.exibir_informacoes()
 
+def atualizar_videos(id, video_att):
+    video = Video.query.get(id)
+    if not video:
+        raise VideoNaoEncontrado
+    
+    if 'nome' in video_att:
+        video.nome = video_att['nome']
+    if 'categoria' in video_att:
+        video.categoria = video_att['categoria']
+    if 'descricao' in video_att:
+        video.descricao = video_att['descricao']
+    if 'video' in video_att:
+        video.video = video_att['video']
+
+    db.session.commit()    
+    
+
 def deletar_video(id):
     video = Video.query.get(id)
 
