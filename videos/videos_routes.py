@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from .videos_models import listar_videos, criar_videos
+from .videos_models import listar_videos, criar_videos, listar_video_id, VideoNaoEncontrado
 
 
 videos_blueprint = Blueprint('videos', __name__)
@@ -14,4 +14,13 @@ def adicionar_video():
 
     new_video = criar_videos(novo_video)
     return jsonify(new_video), 201
+
+
+@videos_blueprint.route('/videos/<int:id>', methods=['GET'])
+def get_video_id(id):
+    try:
+        video = listar_video_id(id)
+        return jsonify(video), 200
+    except VideoNaoEncontrado:
+        return jsonify({'mensagem': 'Video nao encontrado'}), 404
 

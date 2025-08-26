@@ -24,9 +24,19 @@ class Video(db.Model):
             'video': self.video
         }
 
+class VideoNaoEncontrado(Exception):
+    pass
+
 def listar_videos():
     videos = Video.query.all()
     return [video.exibir_informacoes() for video in videos]
+
+def listar_video_id(id):
+    video = Video.query.get(id)
+    if not video:
+        raise VideoNaoEncontrado
+    return video.exibir_informacoes()
+    
 
 def criar_videos(novo_video):
     new_video = Video(
